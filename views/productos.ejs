@@ -1,0 +1,425 @@
+<nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute sticky-top">
+  <img src="/cali/assets/img/header.png" class="img-fluid" alt="Tienda La Generica - Cali">
+</nav>
+
+<div class="content">
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <br>
+          <%notificaciones.forEach((notificacion) => {
+            if (notificacion.error_notificaciones == 12)
+            {%>
+              <br>
+              <div class="alert alert-success d-flex align-items-center" role="alert">
+                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                <div>
+                  La tabla de <b>Productos Rechazados Por Presentar Errores</b> se ha limpiado con exito.
+                </div>
+              </div>
+            <%}
+          })%>   
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-success">
+            <h4 class="card-title"><b>Ingresar productos con un archivo CSV</b></h4>
+            <p class="card-category">Seleccione un archivo CSV para crear los productos</p>
+          </div>
+          
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12">
+                <br>
+                  <%notificaciones.forEach((notificacion) => {
+                    if (notificacion.error_notificaciones == 4)
+                    {%>
+                      <br>
+                      <div class="alert alert-danger d-flex align-items-center" role="alert">
+                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                        <div>
+                          Todos los <b>Productos</b> fueron <b>Rechazados</b> para ser grabados por tener un código ya existente o un proveedor no registrado en la base de datos.
+                          <hr style="height:1px"> 
+                          <%cargues.forEach((cargue) => {%>
+                            Productos Aceptados: <%= cargue.aceptados_cargues %>
+                            <br>Productos Rechazados: <b><%= cargue.rechazados_cargues %></b>
+                            <br>Total: <b><%= cargue.total_cargues %></b>
+                          <%})%>
+                          <hr style="height:2px"> 
+                          Para más información, ver la tabla de <a class="rechazados" href="#tablaProductosRechazados"><b>Productos Rechazados Por Presentar Errores</b></a> al final de la página.
+                        </div>
+                      </div>
+                    <%}
+                    if (notificacion.error_notificaciones == 5)
+                    {%>
+                      <br>
+                      <div class="alert alert-danger d-flex align-items-center" role="alert">
+                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                        <div>
+                          Algunos <b>Productos</b> fueron <b>Rechazados</b> para ser grabados por tener un código ya existente o un proveedor no registrado en la base de datos.
+                          <hr style="height:1px"> 
+                          <%cargues.forEach((cargue) => {%>
+                            Productos Aceptados: <b><%= cargue.aceptados_cargues %></b>
+                            <br>Productos Rechazados: <b><%= cargue.rechazados_cargues %></b>
+                            <br>Total: <b><%= cargue.total_cargues %></b>
+                          <% })%>
+                          <hr style="height:2px"> 
+                          Para más información, ver la tabla de <a class="rechazados" href="#tablaProductosRechazados"><b>Productos Rechazados Por Presentar Errores</b></a> al final de la página.
+                        </div>
+                      </div>
+                    <%}
+                    if (notificacion.error_notificaciones == 6)
+                    {%>
+                      <br>
+                      <div class="alert alert-success d-flex align-items-center" role="alert">
+                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                        <div> 
+                          Todos los <b>Productos</b> fueron <b>Aceptados</b> con éxito.
+                          <hr style="height:1px"> 
+                          <%cargues.forEach((cargue) => {%>
+                            Productos Aceptados: <b><%= cargue.aceptados_cargues %></b>
+                            <br>Productos Rechazados: <%= cargue.rechazados_cargues %>
+                            <br>Total: <b><%= cargue.total_cargues %></b>
+                          <%})%>
+                          <hr style="height:2px"> 
+                          Para más información, ver la tabla de <a class="aceptados" href="#tablaProductos"><b>Productos Grabados en la Base de Datos</b></a>.
+                        </div>
+                      </div>
+                    <%}
+                  })%>   
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <form method="POST" action="/cali/productos/cargar/" enctype="multipart/form-data">
+              <div class="row">
+                <div class="col-md-12">
+                  <div>
+                    <input class="form-control-lg" id="archivo" type="file" name="archivo" accept=".csv" onchange="return validarExt()" required/> 
+                  </div>
+                </div>
+              </div>   
+              <button type="submit" class="btn btn-success pull-right">Subir Archivo</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-success">
+            <h4 class="card-title"><b>Ingresar producto de forma individual</b></h4>
+            <p class="card-category">Complete la información del producto</p>
+          </div>
+
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12">
+                
+                  <%notificaciones.forEach((notificacion) => {
+                    if (notificacion.error_notificaciones == 1)
+                    {%>
+                      <br>
+                      <div class="alert alert-danger d-flex align-items-center" role="alert">
+                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                        <div>
+                          No se puede crear el producto porque el código de producto ya esta registrado en la base de datos, para más información ver la tabla de <a class="rechazados" href="#tablaProductosRechazados"><b>Productos Rechazados Por Presentar Error</b></a> al final de la página.
+                        </div>
+                      </div>
+                    <%}
+                    if (notificacion.error_notificaciones == 2)
+                    {%>
+                      <br>
+                      <div class="alert alert-danger d-flex align-items-center" role="alert">
+                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                        <div>
+                          No se puede crear el producto porque el proveedor del producto no esta registrado en la base de datos, para más información ver la tabla de <a class="rechazados" href="#tablaProductosRechazados"><b>Productos Rechazados Por Presentar Error</b></a> al final de la página.
+                        </div>
+                      </div>
+                    <%}
+                    if (notificacion.error_notificaciones == 3)
+                    {%>
+                      <br>
+                      <div class="alert alert-success d-flex align-items-center" role="alert">
+                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                        <div>
+                          Producto creado con éxito, para más información ver la tabla de <a class="aceptados" href="#tablaProductos"><b>Productos Grabados en la Base de Datos</b></a>.
+                        </div>
+                      </div>
+                    <%}
+                  })%>
+                
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <form action="/cali/productos" method="POST">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Codigo del Producto</label>
+                    <input type="number" class="form-control bg-transparent text-white border-0" name="txtCodigo" id="txtCodigo" maxlength="50" min="1" pattern="[0-9]+" required>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Nombre del Producto</label>
+                    <input type="text" class="form-control bg-transparent text-white border-0" name="txtNombre" id="txtNombre" maxlength="50" required>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">NIT del Proveedor</label>
+                    <input type="number" class="form-control bg-transparent text-white border-0" name="txtNIT" id="txtNIT" min="1" pattern="[0-9]+" maxlength="50" required>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Precio de compra del Producto</label>
+                    <input type="number" class="form-control bg-transparent text-white border-0" name="txtCompra" id="txtCompra"	maxlength="50" min="1" pattern="[0-9]+" required>
+                  </div>
+                </div>
+                <div class="col-md-3">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">IVA</label>
+                    <input type="number" class="form-control bg-transparent text-white border-0" name="txtIVA" id="txtIVA" maxlength="50" min="0" max="100" pattern="[0-9]+" required>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Precio de venta del producto</label>
+                    <input type="number" class="form-control bg-transparent text-white border-0" name="txtVenta" id="txtVenta" min="1" pattern="[0-9]+" maxlength="50" required>
+                  </div>
+                </div>
+              </div> 
+                <button type="submit" class="btn btn-success pull-right">Crear Producto</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%if (productos.length != 0)
+  {%>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header card-header-success">
+              <h4 class="card-title "><b>Productos registrados en la base de datos</b></h4>
+            </div>
+
+            <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-12">
+                  
+                  <%notificaciones.forEach((notificacion) => {
+                    if (notificacion.error_notificaciones == 7)
+                    {%>
+                      <br>
+                      <div class="alert alert-danger d-flex align-items-center" role="alert">
+                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                        <div>
+                          No se puede modificar el producto porque el proveedor no está registrado en la base de datos, para más información ver la tabla de <a class="rechazados" href="#tablaProductosRechazados"><b>Productos Rechazados Por Presentar Error</b></a> al final de la página.
+                        </div>
+                      </div>
+                    <%}
+                    if (notificacion.error_notificaciones == 8)
+                    {%>
+                      <br>
+                      <div class="alert alert-success d-flex align-items-center" role="alert">
+                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                        <div>
+                          Producto modificado con éxito.
+                        </div>
+                      </div>
+                    <%}
+                    if (notificacion.error_notificaciones == 9)
+                    {%>
+                      <br>
+                      <div class="alert alert-danger d-flex align-items-center" role="alert">
+                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                        <div>
+                          No se puede eliminar el producto porque ya tiene ventas registradas.
+                        </div>
+                      </div>
+                    <%}
+                    if (notificacion.error_notificaciones == 10)
+                    {%>
+                      <br>
+                      <div class="alert alert-success d-flex align-items-center" role="alert">
+                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                        <div>
+                          Producto eliminado con éxito.
+                        </div>
+                      </div>
+                    <%}
+                  })%>
+
+                </div>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="display"  id="tablaProductos" style="text-align: center; width:100%;">
+                  <thead class=" text-primary">
+                    <th>
+                      Codigo
+                    </th>
+                    <th>
+                      Nombre
+                    </th>
+                    <th>
+                      NIT Proveedor
+                    </th>
+                    <th>
+                      Precio Compra
+                    </th>
+                    <th>
+                      IVA
+                    </th>
+                    <th>
+                      Precio Venta
+                    </th>
+                    <th>
+                      Acciones
+                    </th>
+                  </thead>
+                  <tbody>
+                    <%productos.forEach((producto) => {%>
+                      <tr>
+                        <td class="text-warning"><%=producto.codigo_productos%></td>
+                        <td><%=producto.nombre_productos%></td>
+                        <td class="text-primary"><%=producto.nitproveedor_productos%></td>
+                        <td><%=producto.precio_compra_productos%></td>
+                        <td><%=producto.ivacompra_productos%></td>
+                        <td class="text-primary"><%=producto.precio_venta_productos%></td>
+                        <td>
+                          <button type="button" class="btn btnEditarProducto" data-bs-toggle="modal" data-bs-target="#modalProducto">
+                            EDITAR
+                          </button>
+                          <button type="submit" class="btn" onclick="confirmarProducto(<%=producto.codigo_productos%>)"><i class="material-icons">delete_forever</i></button> 
+                        </td>
+                      </tr>
+                    <%})%>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <%}%> 
+
+  <%if (productosRechazados.length != 0)
+  {%>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header card-header-success">
+              <h4 class="card-title "><b>Productos rechazados por presentar errores</b></h4>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="display" id="tablaProductosRechazados" style="text-align: center; width:100%;">
+                  <thead class="text-primary">
+                    <th>
+                      Codigo
+                    </th>
+                    <th>
+                      Nombre
+                    </th>
+                    <th>
+                      NIT Proveedor
+                    </th>
+                    <th>
+                      Error Registrado
+                    </th>
+                    <th>
+                      Fecha
+                    </th>
+                  </thead>
+                  <tbody>
+                    <%productosRechazados.forEach((productorechazado) => {%>
+                      <tr>
+                        <td class="text-primary"><%=productorechazado.codigo_productos_rechazados%></td>
+                        <td><%=productorechazado.nombre_productos_rechazados%></td>
+                        <td><%=productorechazado.nitproveedor_productos_rechazados%></td>
+                        <td class="text-warning"><%=productorechazado.error_productos_rechazados%></td>
+                        <td><%=productorechazado.fecha_productos_rechazados%></td>
+                      </tr>
+                    <%})%>
+                  </tbody>
+                  <tr> 
+                    <td colspan="5">
+                      <a href='/cali/productos/limpiar' class="w-100 btn btn-success pull-right"> Limpiar Datos</a>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <%}%>
+
+</div>
+
+  <div id="modalProducto" class="modal fade" tabindex="-1" aria-labelledby="modalProducto" aria-hiden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-success text-white">
+          <h5 class="modal-title" id="exampleModalLabel">Editar Producto</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+          <div class="modal-body">
+            <form action="/cali/productos/modificar/" method="POST">
+              <input type="number" name="txtCodigo_editar" id="txtCodigo_editar" hidden>
+              <div class="mb-3">
+                <label class="form-label" for="txtNombre_editar">Nombre Producto</label>
+                <input class="form-control bg-transparent text-black border-0" type="text" name="txtNombre_editar" id="txtNombre_editar" maxlength="50" required>
+              </div>       
+              <div class="mb-3">
+                <label class="form-label" for="txtNIT_editar">NIT Proveedor</label> 
+                <input class="form-control bg-transparent text-black border-0" type="number" name="txtNIT_editar" id="txtNIT_editar" min="1" pattern="[0-9]+" maxlength="50" required>
+              </div>       
+              <div class="mb-3">
+                <label class="form-label" for="txtPrecioCompra_editar">Precio Compra</label>
+                <input class="form-control bg-transparent text-black border-0" type="number" name="txtPrecioCompra_editar" id="txtPrecioCompra_editar"	min="1" pattern="[0-9]+" maxlength="50" required>
+              </div>
+              <div class="mb-3">
+                <label class="form-label" for="txtIVA_editar">IVA </label>
+                <input class="form-control bg-transparent text-black border-0" type="number" name="txtIVA_editar" id="txtIVA_editar" min="1" pattern="[0-9]+" maxlength="50" required>
+              </div> 
+              <div class="mb-3">
+                <label class="form-label" for="txtPrecioVenta_editar">Precio Venta</label>
+                <input class="form-control bg-transparent text-black border-0" type="number" name="txtPrecioVenta_editar" id="txtPrecioVenta_editar" min="1" pattern="[0-9]+" maxlength="50" required>
+              </div>   
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Modificar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+      

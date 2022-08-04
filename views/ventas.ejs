@@ -1,0 +1,68 @@
+<nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute sticky-top">
+  <img src="/cali/assets/img/header.png" class="img-fluid" alt="Tienda La Generica - Cali">
+</nav>
+
+<br>
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-success">
+            <h4 class="card-title"><b>Ventas</b></h4>
+            <p class="card-category">Por favor ingrese la cedula del Cliente para inicar el proceso de ventas.</p>
+          </div>
+
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12">
+                <br>
+                  <%notificaciones.forEach((notificacion) => {
+                    if (notificacion.error_notificaciones == 1)
+                    {%>
+                      <br>
+                      <div class="alert alert-danger d-flex align-items-center" role="alert">
+                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                        <div>
+                          El cliente no exite en la base de datos.
+                        </div>
+                      </div>
+                    <%}
+                    if (notificacion.error_notificaciones == 2)
+                    {%>
+                      <br>
+                      <div class="alert alert-success d-flex align-items-center" role="alert">
+                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                        <div>
+                          Se ha cancelado la venta con exito.
+                        </div>
+                      </div>
+                    <%}
+                  })%>   
+              </div>
+            </div>
+          </div>
+
+
+          <div class="card-body">
+            <form id="form_datos" action="/cali/ventas/consultarCedula" method="POST">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Cedula Cliente</label>
+                    <input type="number" class="form-control bg-transparent text-white border-0" name="txtCedula" id="txtCedula" maxlength="50" min="1" pattern="[0-9]+" required>
+                  </div>
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <button type="submit" class="w-100 btn btn-success pull-right">Consultar Cedula</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

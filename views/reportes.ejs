@@ -1,0 +1,141 @@
+<nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute sticky-top">
+  <img src="/cali/assets/img/header.png" class="img-fluid" alt="Tienda La Generica - Cali">
+</nav>
+
+<br>
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-success">
+            <h4 class="card-title">Seleccione el reporte que desea consultar</h4>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-4">
+                <div>
+                  <button type="submit" class="btn btn-success pull-right" style='cursor: pointer;' onClick="muestra_ocultaclientes('clientes','ventas')" title="">Reporte Clientes</button>  
+                </div>
+              </div>
+              <div class="col-md-5">
+                <div>
+                  <button type="submit" class="btn btn-success pull-right" style='cursor: pointer;' onClick="muestra_ocultaventas('ventas','clientes')" title="">Reporte Ventas</button> 
+                </div>
+              </div>
+            </div>   
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="clientes">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header card-header-success">
+              <h4 class="card-title">Clientes registrados en la base de datos</h4>      
+            </div>
+            <div class="card-body">
+              <table class="display" id="tablaClientes" style="text-align: center; width:100%;">
+                <thead class=" text-success">
+                  <th>
+                    Cedula
+                  </th>
+                  <th>
+                    Nombre
+                  </th>
+                  <th>
+                    Telefono
+                  </th>
+                  <th>
+                    Correo Electronico
+                  </th>
+                  <th>
+                    Direccion
+                  </th>     
+                </thead>
+                <tbody>
+                  <%clientes.forEach((cliente) => {%>
+                    <tr>
+                      <td class="text-primary"><%=cliente.cedula_clientes%></td>
+                      <td><%=cliente.nombre_clientes%></td>
+                      <td><%=cliente.telefono_clientes%></td>
+                      <td><%=cliente.email_clientes%></td>
+                      <td><%=cliente.direccion_clientes%></td>
+                    </tr>
+                    <%})%>
+                </tbody>
+              </table>
+            </div>  
+          </div>   
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="ventas">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header card-header-success">
+              <h4 class="card-title">Reporte de ventas por Cliente</h4>      
+            </div>
+            <div class="card-body">
+              <table class="display" id="tablaVentas" style="text-align: center; width:100%;">
+                <thead class="text-success" >
+                  <tr>
+                    <th>Cedula</th>
+                    <th>Nombre</th>
+                    <th>Ventas</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% txtTotalVentas = 0;
+                  ventas.forEach((venta) => {%>
+                  <tr>
+                    <td>
+                      <%=venta.cedula_cliente_ventas%>
+                    </td>
+                    <td>
+                      <% clientes.forEach((cliente) => {
+                        if (cliente.cedula_clientes == venta.cedula_cliente_ventas)
+                        {%>
+                          <%=cliente.nombre_clientes%>
+                        <%}
+                      })%>
+                    </td>
+                    <td>
+                      $ <%=venta.total_venta_ventas%>
+                    </td>
+                  </tr>
+                  <%txtTotalVentas = txtTotalVentas + venta.total_venta_ventas;
+                  })%>
+                </tbody>
+              </table>
+              <div class="container-fluid">
+                <div class="row">
+                  <div class="col-md-3" style="text-align:left">
+                    <h2><span class="badge bg-success">VENTAS TOTALES</span></h2>
+                  </div>
+                  <div class="col-md-5" style="text-align:left">
+                    <h2><input type="text" name="txtTotalVentas" id="txtTotalVentas" value="$ <%=txtTotalVentas%>" maxlength="40" size="40" disabled> </h2>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+      
+ 
+  
+      

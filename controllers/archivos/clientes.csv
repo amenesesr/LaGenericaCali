@@ -1,0 +1,6 @@
+cedula_clientes,direccion_clientes,email_clientes,nombre_clientes,telefono_clientes
+10,Calle 123 #45-67,1@1,cliente de pruebas 1,12345679
+12,Calle 567 #89-01,3@3,cliente de pruebas 3,12345679
+13,Calle 234 #56-78,4@4,cliente de pruebas 4,12345679
+14,Calle 901 #23-45,5@5,cliente de pruebas 5,12345679
+15,Calle 890 #12-34,2@2,cliente de pruebas 2,12345679

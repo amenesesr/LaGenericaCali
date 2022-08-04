@@ -1,0 +1,126 @@
+<nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute sticky-top">
+  <img src="/cali/assets/img/header.png" class="img-fluid" alt="Tienda La Generica - Cali">
+</nav>
+
+<div class="content">
+  <div class="container-fluid">
+  
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-success">
+            <h4 class="card-title"><b>Consulta de facturas por numero de cedula</b></h4>
+            <p class="card-category">Digite el numero de la cedula</p>
+          </div>
+
+          <%if (error_notificaciones == 1)
+          {%>
+            <br>
+            <div class="col-md-12">
+              <div class="alert alert-danger d-flex align-items-center" role="alert">
+              <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                <div> 
+                  El cliente con cédula <%=txtCedula%> no ha realizado compras.
+                </div>
+              </div>
+            </div>
+          <%}%>   
+
+          <div class="card-body">
+            <form action="/cali/consultaCedula" method="POST">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Cedula</label>
+                    <input type="number" class="form-control bg-transparent text-white border-0" name="txtCedula" id="txtCedula" maxlength="50" min="1" pattern="[0-9]+" required>
+                    <button type="submit" class="btn btn-success pull-right">Consultar Factura</button>
+                  </div>
+                </div>
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <%if (error_notificaciones == 2)
+    {%>
+      <br>
+      <div class="col-md-12">
+        <div class="alert alert-success d-flex align-items-center" role="alert">
+          <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+          <div> 
+            El cliente con cédula <%=txtCedula%> ha realizado compras, ver tabla.
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header card-header-success">
+              <h4 class="card-title"><b>Facturas a nombre de la cédula <%=txtCedula%></b></h4>
+            </div>
+            <div class="card-body">
+           
+    
+                <table id="tablaCedula" class="display" style="text-align: center;">
+                  <thead>
+                    <tr>
+                      <th>Cédula</th>
+                      <th>Consecutivo</th>
+                      <th>Fecha</th>
+                      <th>Acción</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <%consultaVentas.forEach((venta) => {%>
+                      <tr>
+                        <form action="/cali/facturacion/consultarConsecutivo" method="POST">
+                          <td><%=venta.cedula_cliente_ventas%></td>
+                          <td><%=venta.codigo_venta_ventas%><input type="number" name="txtConsecutivo" value="<%=venta.codigo_venta_ventas%>" id="txtConsecutivo" hidden></td>
+                          <td><%=venta.fechahora_ventas%></td>
+                          <td><button type="submit" class="btnImprimir btn btn-outline-primary bi bi-printer-fill"> Consultar</button>
+                        </form>
+                      </tr>
+                    <%})%>
+                  </tbody>
+                </table>
+            
+            </div>
+          </div>
+        </div>
+      </div>  
+    <%}%> 
+    
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-header card-header-success">
+          <h4 class="card-title"><b>Consulta de facturas por numero de factura (Consecutivo)</b></h4>
+          <p class="card-category">Digite el numero de la factura</p>
+        </div>
+        <div class="card-body">
+          <form action="/cali/facturacion/consultarConsecutivo" method="POST">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="bmd-label-floating">Consecutivo</label>
+                  <input type="number" class="form-control bg-transparent text-white border-0" name="txtConsecutivo" id="txtConsecutivo" maxlength="50" min="1" pattern="[0-9]+" required>
+                  <button type="submit" class="btn btn-success pull-right">Consultar Factura</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>   
+</div>
+
+
+ 
+   
+  
+  
+      

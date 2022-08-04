@@ -1,0 +1,415 @@
+<nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute sticky-top">
+  <img src="/cali/assets/img/header.png" class="img-fluid" alt="Tienda La Generica - Cali">
+</nav>
+
+<div class="content">
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <br>
+          <%notificaciones.forEach((notificacion) => {
+            if (notificacion.error_notificaciones == 11)
+            {%>
+              <br>
+              <div class="alert alert-success d-flex align-items-center" role="alert">
+                <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                <div>
+                  La tabla de <b>Usuarios Rechazados Por Presentar Errores</b> se ha limpiado con exito.
+                </div>
+              </div>
+            <%}
+          })%>   
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-success">
+            <h4 class="card-title"><b>Ingresar usuarios con un archivo CSV</b></h4>
+            <p class="card-category">Seleccione un archivo CSV para crear los usuarios</p>
+          </div>
+
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12">
+                <br>
+                  <%notificaciones.forEach((notificacion) => {
+                    if (notificacion.error_notificaciones == 4)
+                    {%>
+                      <br>
+                      <div class="alert alert-danger d-flex align-items-center" role="alert">
+                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                        <div>
+                          Todos los <b>Usuarios</b> fueron <b>Rechazados</b> para ser grabados porque ya tienen la cedula o el usuario de acceso registrados en la base de datos.
+                          <hr style="height:1px"> 
+                          <%cargues.forEach((cargue) => {%>
+                            Usuarios Aceptados: <%= cargue.aceptados_cargues %>
+                            <br>Usuarios Rechazados: <b><%= cargue.rechazados_cargues %></b>
+                            <br>Total: <b><%= cargue.total_cargues %></b>
+                          <%})%>
+                          <hr style="height:2px"> 
+                          Para más información, ver la tabla de <a class="rechazados" href="#tablaUsuariosRechazados"><b>Usuarios Rechazados Por Presentar Errores</b></a> al final de la página.
+                        </div>
+                      </div>
+                    <%}
+                    if (notificacion.error_notificaciones == 5)
+                    {%>
+                      <br>
+                      <div class="alert alert-danger d-flex align-items-center" role="alert">
+                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                        <div>
+                          Algunos <b>Usuarios</b> fueron <b>Rechazados</b> para ser grabados porque ya tienen la cedula o el usuario de acceso registrados en la base de datos.
+                          <hr style="height:1px"> 
+                          <%cargues.forEach((cargue) => {%>
+                            Usuarios Aceptados: <b><%= cargue.aceptados_cargues %></b>
+                            <br>Usuarios Rechazados: <b><%= cargue.rechazados_cargues %></b>
+                            <br>Total: <b><%= cargue.total_cargues %></b>
+                          <% })%>
+                          <hr style="height:2px"> 
+                          Para más información, ver la tabla de <a class="rechazados" href="#tablaUsuariosRechazados"><b>Usuarios Rechazados Por Presentar Errores</b></a> al final de la página.
+                        </div>
+                      </div>
+                    <%}
+                    if (notificacion.error_notificaciones == 6)
+                    {%>
+                      <br>
+                      <div class="alert alert-success d-flex align-items-center" role="alert">
+                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                        <div> 
+                          Todos los <b>Usuarios</b> fueron <b>Aceptados</b> con éxito.
+                          <hr style="height:1px"> 
+                          <%cargues.forEach((cargue) => {%>
+                            Usuarios Aceptados: <b><%= cargue.aceptados_cargues %></b>
+                            <br>Usuarios Rechazados: <%= cargue.rechazados_cargues %>
+                            <br>Total: <b><%= cargue.total_cargues %></b>
+                          <%})%>
+                          <hr style="height:2px"> 
+                          Para más información, ver la tabla de <a class="aceptados" href="#tablaUsuarios"><b>Usuarios Grabados en la Base de Datos</b></a>.
+                        </div>
+                      </div>
+                    <%}
+                  })%>   
+              </div>
+            </div>
+          </div>
+
+          <div class="card-body">
+            <form method="POST" action="/cali/usuarios/cargar/" enctype="multipart/form-data">
+              <div class="row">
+                <div class="col-md-12">
+                  <div>
+                    <input class="form-control-lg" id="archivo" type="file" name="archivo" accept=".csv" onchange="return validarExt()" required/> 
+                  </div>
+                </div>
+              </div>   
+              <button type="submit" class="btn btn-success pull-right">Subir Archivo</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- End Navbar -->
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-success">
+            <h4 class="card-title"><b>Ingresar usuarios de forma individual</b></h4>
+            <p class="card-category">Complete la información del usuarios</p>
+          </div>
+
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12">
+                
+                  <%notificaciones.forEach((notificacion) => {
+                    if (notificacion.error_notificaciones == 1)
+                    {%>
+                      <br>
+                      <div class="alert alert-danger d-flex align-items-center" role="alert">
+                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                        <div>
+                           No se puede crear el usuario porque la <b>Cedula</b> ya esta registrada en la base de datos, para más información ver la tabla de <a class="rechazados" href="#tablaUsuariosRechazados"><b>Usuarios Rechazados Por Presentar Error</b></a> al final de la página.
+                        </div>
+                      </div>
+                    <%}
+                    if (notificacion.error_notificaciones == 2)
+                    {%>
+                      <br>
+                      <div class="alert alert-danger d-flex align-items-center" role="alert">
+                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                        <div>
+                           No se puede crear el usuario porque el <b>usuario de acceso</b> ya esta registrado en la base de datos, para más información ver la tabla de <a class="rechazados" href="#tablaUsuariosRechazados"><b>Usuarios Rechazados Por Presentar Error</b></a> al final de la página.
+                        </div>
+                      </div>
+                    <%}
+                    if (notificacion.error_notificaciones == 3)
+                    {%>
+                      <br>
+                      <div class="alert alert-success d-flex align-items-center" role="alert">
+                        <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                        <div>
+                          Usuario creado con éxito.
+                        </div>
+                      </div>
+                    <%}
+                  })%>
+                
+              </div>
+            </div>
+          </div>  
+
+          <div class="card-body">
+            <form action="/cali/usuarios" method="POST">
+              <div class="row">
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Cedula</label>
+                    <input type="number" class="form-control bg-transparent text-white border-0" name="txtCedula" id="txtCedula" maxlength="50" min="1" pattern="[0-9]+" required>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Nombre</label>
+                    <input type="text" class="form-control bg-transparent text-white border-0" name="txtNombre" id="txtNombre" maxlength="50" required>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Correo electronico</label>
+                    <input type="text" class="form-control bg-transparent text-white border-0" name="txtCorreo" id="txtCorreo" maxlength="50" required>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Usuario</label>
+                    <input type="text" class="form-control bg-transparent text-white border-0" name="txtUsuario" id="txtUsuario" maxlength="50" required>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Contraseña</label>
+                    <input type="password" class="form-control bg-transparent text-white border-0" name="txtPassword" id="txtPassword" maxlength="50" required>
+                  </div>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-success pull-right">Crear Usuario</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-success">
+            <h4 class="card-title"><b>Usuarios registrados en la base de datos</b></h4>
+          </div>
+
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-12">
+                <%notificaciones.forEach((notificacion) => {
+                  if (notificacion.error_notificaciones == 7)
+                  {%>
+                    <br>
+                    <div class="alert alert-success d-flex align-items-center" role="alert">
+                      <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                      <div>
+                        No se puede modificar el usuario porque el <b>usuario de acceso</b> ya esta registrado en la base de datos, para más información ver la tabla de <a class="rechazados" href="#tablaUsuariosRechazados"><b>Usuarios Rechazados Por Presentar Error</b></a> al final de la página.
+                      </div>
+                    </div>
+                  <%}
+                  if (notificacion.error_notificaciones == 8)
+                  {%>
+                    <br>
+                    <div class="alert alert-success d-flex align-items-center" role="alert">
+                      <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                      <div>
+                        Usuario modificado con éxito.
+                      </div>
+                    </div>
+                  <%}
+                  if (notificacion.error_notificaciones == 9)
+                  {%>
+                    <br>
+                    <div class="alert alert-danger d-flex align-items-center" role="alert">
+                      <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                      <div>
+                        No se puede eliminar el usuario porque ya tiene ventas registradas.
+                      </div>
+                    </div>
+                  <%}
+                  if (notificacion.error_notificaciones == 10)
+                  {%>
+                    <br>
+                    <div class="alert alert-success d-flex align-items-center" role="alert">
+                      <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:"><use xlink:href="#check-circle-fill"/></svg>
+                      <div>
+                        Usuario eliminado con éxito.
+                      </div>
+                    </div>
+                  <%}
+                })%>
+              </div>
+            </div>
+          </div>
+
+          <%if (usuarios.length != 0)
+          {%>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table mdl-data-table" id="tablaUsuarios" style="text-align: center; width:100%;">
+                  <thead class=" text-success">
+                    <th>
+                      Cedula
+                    </th>
+                    <th>
+                      Nombre
+                    </th>
+                    <th>
+                      Correo Electronico
+                    </th>
+                    <th>
+                      Usuario
+                    </th>
+                    <th>
+                      Acciones
+                    </th>
+                  </thead>
+                  <tbody>
+                    <%usuarios.forEach((usuario) => 
+                    {%>
+                      <tr>  
+                        <td class="text-primary"><%=usuario.cedula_usuarios%></td>
+                        <td><%=usuario.nombre_usuarios%></td>
+                        <td><%=usuario.email_usuarios%></td>
+                        <td><%=usuario.usuario_usuarios%></td>
+
+                        <td>
+                          <button type="button" class="btn btnEditarUsuario " data-bs-toggle="modal" data-bs-target="#modalUsuario">
+                            EDITAR
+                          </button>
+                          <button type="submit" class="btn" onclick="confirmarUsuario(<%=usuario.cedula_usuarios%>)"><i class="material-icons">delete_forever</i></button> 
+                        </td>
+                      </tr>
+                    <%})%>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          <%}%>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+ 
+
+  <%if (usuariosRechazados.length != 0)
+  {%>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header card-header-success">
+              <h4 class="card-title"><b>Usuarios rechazados por presentar errores</b></h4>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table mdl-data-table" id="tablaUsuariosRechazados" style="text-align: center; width:100%;">
+                  <thead class=" text-success">
+                    <th>
+                      Cedula
+                    </th>
+                    <th>
+                      Nombre
+                    </th>
+                    <th>
+                      Usuario
+                    </th>
+                    <th>
+                      Error
+                    </th>
+                    <th>
+                      Fecha
+                    </th>
+                  </thead>
+                  <tbody>
+                    <%usuariosRechazados.forEach((usuarioRechazado) => {%>
+                      <tr>  
+                        <td class="text-primary"><%=usuarioRechazado.cedula_usuarios_rechazados%></td>
+                        <td><%=usuarioRechazado.nombre_usuarios_rechazados%></td>
+                        <td class="text-primary"><%=usuarioRechazado.usuarios_usuarios_rechazados%></td>
+                        <td class="text-warning"><%=usuarioRechazado.error_usuarios_rechazados%></td>
+                        <td><%=usuarioRechazado.fecha_usuarios_rechazados%></td>
+                      </tr>
+                    <%})%>
+                  </tbody>
+                  <tr> 
+                    <td colspan="5">
+                      <a href='/cali/usuarios/limpiar' class="w-100 btn btn-success pull-right"> Limpiar Datos</a>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  <%}%>
+
+  <div id="modalUsuario" class="modal fade" tabindex="-1" aria-labelledby="modalUsuario" aria-hiden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header bg-success text-white">
+          <h5 class="modal-title" id="exampleModalLabel">Editar Usuario</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form id="form" action="/cali/usuarios/modificar/" method="POST">
+          <div class="modal-body">
+          
+            <input type="number" name="txtCedula_editar" id="txtCedula_editar" hidden>
+            <div class="mb-3">
+              <label class="form-label" for="txtNombre">Nombre Completo </label>
+              <input class="form-control bg-transparent text-black border-0" type="text" name="txtNombre_editar" id="txtNombre_editar" maxlength="50" required>
+            </div>
+            
+            <div class="mb-3">
+              <label class="form-label" for="txtCorreo">Correo Electrónico </label> 
+              <input class="form-control bg-transparent text-black border-0" type="email" name="txtCorreo_editar" id="txtCorreo_editar" maxlength="50" required>
+            </div>
+            
+            <div class="mb-3">
+              <label class="form-label" for="txtUsuario">Usuario</label>
+              <input class="form-control bg-transparent text-black border-0" type="text" name="txtUsuario_editar" id="txtUsuario_editar"	maxlength="50" required>
+            </div>
+  
+            <div class="mb-3">
+              <label class="form-label" for="txtPassword">Constraseña</label>
+              <input class="form-control bg-transparent text-black border-0" type="password" name="txtPassword_editar" id="txtPassword_editar" maxlength="50" required>
+            </div> 
+  
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-success">Modificar</button>
+          </div>
+        
+        </form>
+      </div>
+    </div>
+  </div>
+  
+  
+      

@@ -1,0 +1,113 @@
+<nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute sticky-top">
+  <img src="/cali/assets/img/header.png" class="img-fluid" alt="Tienda La Generica - Cali">
+</nav>
+
+<div>
+  <br>
+  <br>
+  <br>
+  <br>
+  <br>  
+</div>
+
+<div id="printableArea">
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-success">
+            <h4 class="card-title">Factura Tiendas la Generica - Cali</h4>
+            <p class="card-category">Tiendas la Generica <br>
+              Calle 123 # 45 - 56 Esquina <br>
+              Celular 0123456789 <br>
+              NIT: 98-765-432-1</p>
+          </div>
+          <div class="card-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <hr>
+                  <div>
+                    <p class="card-category">
+                      Nro. Factura: <%= txtConsecutivo %>
+                      <br> Fecha Emision: <%= fechaHoraRegistro %>
+                      <br> Cedula Cliente: <%= txtCedula %>
+                      <br> Telefono: <%= txtTelefonoCliente %>
+                      <br> Direccion: <%= txtdireccionCliente %>
+                      <br> Correo Electronico: <%= txtemailCliente %>
+                      <br> Nombres/Razon: <%= txtNombreCliente %>
+                      <br> Atendido Por: <%= cedulaUsuario %>
+                  </div>
+                  <hr>
+                  <table class="table mdl-data-table" id="" style="text-align: center; width:100%;">
+                    <thead class=" text-primary">
+                      <th>
+                        ID
+                      </th>
+                      <th>
+                        Codigo
+                      </th>
+                      <th>
+                        Nombre
+                      </th>
+                      <th>
+                        Cantidad
+                      </th>
+                      <th>
+                        Valor Producto
+                      </th>
+                      <th>
+                        Total sin IVA
+                      </th>
+                      <th>
+                        Valor IVA
+                      </th>
+                      <th>
+                        Total con IVA
+                      </th>
+                    </thead>
+                    <tbody>
+                      <%facturas.forEach((factura) => {%>  
+                        <tr>
+                          <th><%=factura.ID_temp%></th>
+                          <th><%=factura.codigo_producto_temp%></th>
+                          <td><%=factura.nombre_producto_temp%></td>
+                          <td><%=factura.cantidad_producto_temp%></td>
+                          <td>$ <%=factura.valor_producto_temp%></td>
+                          <td>$ <%=factura.parcial_producto_temp%></td>
+                          <td>$ <%=factura.iva_producto_temp%></td>
+                          <td>$ <%=factura.total_temp%></td>
+                        </tr>
+                        <% })%>        
+                    </tbody>
+                  </table>
+                  <div>
+                    <p class="card-category">
+                      <hr>
+                      Total Sin IVA:      $ <%= totalparcial %> 
+                      <br> Impuesto 19%:  $ <%= totaliva %>
+                      <br> Valor a Pagar: $ <%= totalfinal %>
+                  </div>
+                  <div>
+                    <p class="card-category">
+                      <hr>
+                      Debo y pagare incondicionalmente a la orden de _____ la cantidad de _________ en esta ciudad de Cali En caso de mora me comprometo a pagar el interes del _____ anual desde su vencimiento 
+                      hasta la cancelacion de la deuda. En el evento de juicio me someto a los jueces de la ciudad de Cali y al procedimiento ejecutivo o verbal sumario a eleccion de _____ sin protesto eximese 
+                      de presentacion para el pago y de aviso por falta del mismo.
+                      <br>
+                      <br>
+                      CALI, ______ DE ____________ DEL ______
+                      <hr>
+                  </div>    
+                </div>
+              </div>   
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+<div class="container-fluid">
+  <button type="submit" id="btnImprimir" name="btnImprimir" onclick="printDiv('printableArea')" value="Imprimir Factura" class="btn btn-success pull-right">imprimir</button>
+</div>

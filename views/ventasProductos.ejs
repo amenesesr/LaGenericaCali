@@ -1,0 +1,262 @@
+<nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute sticky-top">
+  <img src="/cali/assets/img/header.png" class="img-fluid" alt="Tienda La Generica - Cali">
+</nav>
+
+<br>
+<div class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header card-header-success">
+            <h4 class="card-title"><b>Ventas</b></h4>
+            <p class="card-category"><b>Por favor ingrese los datos de la venta</b></p>
+          </div>
+          <div class="card-body">
+            <form id="form_datos" action="/cali/ventasProductos" method="POST">
+              <input type="number" name="txtCedula" id="txtCedula" value= "<%=txtCedula%>" hidden>
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Codigo de Producto</label>
+                    <input type="text" class="form-control bg-transparent text-white border-0" name="txtCodigo" id="txtCodigo" maxlength="50" required>
+                  </div>
+                </div>
+
+                <div class="col-md-2">
+                  <div class="form-group"> 
+                  </div>
+                </div>
+                
+                <div class="col-md-4">
+                  <div class="form-group">
+                    <a onclick="cancelarVenta()"  class="w-100 btn btn-danger pull-right bi-x-octagon-fill"> Cancelar Venta </a>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="bmd-label-floating">Cantidad de Producto</label>
+                    <input type="number" class="form-control bg-transparent text-white border-0" name="txtCantidad" id="txtCantidad" maxlength="50" min="0" pattern="[0-9]+" required>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <button type="submit" class="w-100 btn btn-success pull-right">Registrar producto</button>
+                  </div>
+                </div>
+              </div>  
+            </form>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <%if (error_notificaciones == 1)
+                  {%>
+                    <hr style="height:2px">
+                    <div class="alert alert-danger d-flex align-items-center" role="alert">
+                      <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                      <div>
+                        El producto con código <%=txtCodigo%> no existe en la base de datos.
+                      </div>
+                    </div>
+                  <%}%>
+                  <%if (error_notificaciones == 2)
+                  {%>
+                    <hr>
+                    <div class="alert alert-success d-flex align-items-center" role="alert">
+                      <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                      <div>
+                        El producto con código <%=txtCodigo%> registrado en la venta con éxito.
+                      </div>
+                    </div>
+                  <%}%>
+                  <%if (error_notificaciones == 3)
+                  {%>
+                    <hr>
+                    <div class="alert alert-success d-flex align-items-center" role="alert">
+                      <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                      <div>
+                        El producto con código <%=txtCodigo%> se ha borrado de la venta con éxito.
+                      </div>
+                    </div>
+                  <%}%>                 
+
+            </div>
+          </div>
+        </div>
+          
+
+          <div class="card">
+            <div class="row">
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label class="bmd-label-floating">Cedula Cliente</label>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label class="bmd-label-floating">
+                    <%=txtCedula%>
+                  </label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <label class="bmd-label-floating">
+                  <%=txtNombre%>
+                </label>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label class="bmd-label-floating">Factura Numero </label>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <label class="bmd-label-floating">
+                  <%=txtConsecutivo%>
+                </label>
+              </div>
+              <div class="col-md-1">
+                <div class="form-group">
+                  <label class="bmd-label-floating">Fecha </label>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="bmd-label-floating">
+                    <%  fecha = new Date();
+                    options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour:'numeric', minute: 'numeric',
+                                second:'numeric'};%>
+                    <%= fecha.toLocaleDateString("es-CO",options) %>
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>    
+        </div> 
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card">
+              <div class="card-header card-header-success">
+                <h4 class="card-title"><b>Productos registrados en la venta</b></h4>
+              </div>
+                <div class="card-body">
+                  <div class="table-responsive">
+                    <table class="table mdl-data-table" id="tablaventas" style="text-align: center; width:100%;">
+                      <thead class=" text-primary">
+                        <th>
+                          ID
+                        </th>
+                        <th>
+                          Codigo
+                        </th>
+                        <th>
+                          Nombre
+                        </th>
+                        <th>
+                          Cantidad
+                        </th>
+                        <th>
+                          Valor Producto
+                        </th>
+                        <th>
+                          Total sin IVA
+                        </th>
+                        <th>
+                          Valor IVA
+                        </th>
+                        <th>
+                          Total con IVA
+                        </th>
+                      </thead>
+                      <tbody>
+                        <%ventasTemp.forEach((ventaTemp) => {%>
+                          <form action="/cali/ventasProductos/eliminar/<%=ventaTemp.ID_temp%>" method="POST">
+                            <tr>
+                              <input type="number" name="txtCedula" id="txtCedula" value= "<%=txtCedula%>" hidden>
+                              <td class="text-warning"><%=ventaTemp.ID_temp%></td>
+                              <td><%=ventaTemp.codigo_producto_temp%></td>
+                              <td><%=ventaTemp.nombre_producto_temp%></td>
+                              <td><%=ventaTemp.cantidad_producto_temp%></td>
+                              <td><%=ventaTemp.valor_producto_temp%></td>
+                              <td><%=ventaTemp.parcial_producto_temp%></td>
+                              <td><%=ventaTemp.iva_producto_temp%></td>
+                              <td><%=ventaTemp.total_temp%></td>
+                              <td>
+                                <!-- <a href="/cali/ventas/eliminar/<%=ventaTemp.codigo_producto_temp%>" onclick="return confirm('¿Esta seguro de querer eliminar el producto '+ <%=ventaTemp.codigo_producto_temp%> +' ?');" class="btn btn-outline-danger bi bi-trash"></a> -->
+                                <button type="submit" onclick="return confirm('¿Esta seguro de querer eliminar el producto '+ <%=ventaTemp.ID_temp%> +' ?');" class="btn btn-outline-danger bi bi-trash"></a></button>
+                              </td>
+                            </tr> 
+                          </form>
+                        <%})%>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        
+          <div class="card-body">  
+            <div class="row">
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label class="bmd-label-floating">Total Venta sin IVA </label>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label class="bmd-label-floating"><%=totalparcial%> </label>
+                </div>
+              </div>          
+            </div>
+            <div class="row">
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label class="bmd-label-floating">Total Valor IVA </label>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label class="bmd-label-floating"><%=totaliva%> </label>
+                </div>
+              </div>          
+            </div>
+            <div class="row">
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label class="bmd-label-floating">Total Venta con IVA </label>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label class="bmd-label-floating"><%=totalfinal%> </label>
+                </div>
+              </div>          
+            </div>
+
+            <%if(ventasTemp.length != 0)
+            {%>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <form action="/cali/factura" method="POST">
+                    <input type="hidden" id="txtCedula" name="txtCedula" value="<%=txtCedula%>">
+                    <input type="hidden" id="usuario" name="usuario" value="<%= usuario %>">
+                    <button type="submit" class="w-100 btn btn-success pull-right">Registrar Venta</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <%}%>
+          </div>
+
+    </div>
+  </div>
+</div>
+
